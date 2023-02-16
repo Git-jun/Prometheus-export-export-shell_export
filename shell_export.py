@@ -23,9 +23,8 @@ def export_client(monitor_dic):
     metrics = [Gauge(name, help) for name, help in zip(metric_names, metric_helps)]
     return metric_names,metric_helps,command_dict,metrics
 
-def get_metric_values():
+def get_metric_values(metric_names,metric_helps,command_dict,metrics):
     metric_values = {}
-    metric_names,metric_helps,command_dict,metrics = read_yaml()
     for name, cmd in command_dict.items():
         output = subprocess.getstatusoutput(cmd)
         if output[0] == 0:
@@ -36,8 +35,8 @@ def get_metric_values():
             print("命令执行失败：{}".format(output[1]))
     return metric_values,metrics,metric_names
 
-def update_metrics():
-    values,metrics,metric_names = get_metric_values()
+def update_metrics(metric_names,metric_helps,command_dict,metrics):
+    values,metrics,metric_names = get_metric_values(metric_names,metric_helps,command_dict,metrics)
     for name, value in values.items():
         metric = metrics[metric_names.index(name)]
         metric.set(value)
@@ -46,9 +45,10 @@ def update_metrics():
 def main():
     port = 8000
     start_http_server(port)
+    metric_names,metric_helps,command_dict,metrics = read_yaml()
     while True:
-        update_metrics()
-        time.sleep(60)
+        update_metrics(metric_names,metric_helps,command_dict,metrics)
+        time.sleep(10)
 
 if __name__ == '__main__':
     main()
