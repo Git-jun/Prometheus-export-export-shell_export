@@ -10,7 +10,10 @@ def read_yaml():
         data = yaml.safe_load(f)
     
     metric_names,metric_helps,command_dict,metrics = export_client(data['monitoring'])
-    return metric_names,metric_helps,command_dict,metrics
+    port = data['EXPORT-ENV'][0]['port']
+    print(port)
+    
+    return metric_names,metric_helps,command_dict,metrics,port
 
 def export_client(monitor_dic):
     metric_names = []
@@ -43,9 +46,8 @@ def update_metrics(metric_names,metric_helps,command_dict,metrics):
 
 
 def main():
-    port = 8000
+    metric_names,metric_helps,command_dict,metrics,port = read_yaml()
     start_http_server(port)
-    metric_names,metric_helps,command_dict,metrics = read_yaml()
     while True:
         update_metrics(metric_names,metric_helps,command_dict,metrics)
         time.sleep(10)

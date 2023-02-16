@@ -7,3 +7,9 @@ monitoring:
     help: "Monitoring tcp connection status belongs to CLOSE_WAIT"
     command: "netstat -ant |grep 80|grep CLOSE_WAIT|wc -l"
     interval: 30s
+  - name: root_partition_usage_percentage
+    help: "root partition usage percentage"
+    command: "df -h |grep -w  /  |awk '{print $5 }' |sed  's/%//'"
+    interval: 30s
+EXPORT-ENV:
+  - port: 8008
