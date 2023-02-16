@@ -12,4 +12,4 @@ monitoring:
     command: "df -h |grep -w  /  |awk '{print $5 }' |sed  's/%//'"
     interval: 30s
 EXPORT-ENV:
-  - port: 8008
+  - port: 8000
