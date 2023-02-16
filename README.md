@@ -11,3 +11,14 @@ monitoring:
     interval: 30s
 
 ```
+
+* 运行项目确保有python3环境具体版本没有特殊要求
+* 安装依赖
+```
+pip3 install prometheus_client
+```
+* 修改export.yaml文件按照上述例子修改
+* 运行项目 
+```
+nohup python3 shell_export.py &
+```
