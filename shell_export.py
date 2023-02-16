@@ -49,11 +49,15 @@ def update_metrics(metric_names,metric_helps,command_dict,metrics):
 
 
 def main():
-    metric_names,metric_helps,command_dict,metrics,port = read_yaml()
-    start_http_server(port)
-    while True:
-        update_metrics(metric_names,metric_helps,command_dict,metrics)
-        time.sleep(10)
+    try:
+        metric_names,metric_helps,command_dict,metrics,port = read_yaml()
+        start_http_server(port)
+        while True:
+            update_metrics(metric_names,metric_helps,command_dict,metrics)
+            time.sleep(10)
+    except Exception as e:
+        LOG.info("The program runs abnormally : {}".format(e))
+        sys.exit(999)
 
 def _config_logging():
     level = logging.INFO
