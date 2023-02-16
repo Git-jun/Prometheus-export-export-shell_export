@@ -1,0 +1,9 @@
+monitoring:
+  - name: TCP_ESTABLISHED 
+    help: "Monitoring tcp connection status belongs to ESTABLISHED"
+    command: "netstat -ant |grep 80|grep ESTABLISHED|wc -l"
+    interval: 30s
+  - name: TCP_CLOSE_WAIT
+    help: "Monitoring tcp connection status belongs to CLOSE_WAIT"
+    command: "netstat -ant |grep 80|grep CLOSE_WAIT|wc -l"
+    interval: 30s
